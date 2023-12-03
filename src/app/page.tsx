@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import type { Data } from "@/lib/types";
-import DataTable from "@/components/DataTable";
+import DataTable, { Data } from "@/components/DataTable";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -205,10 +204,8 @@ export default function Home() {
 			<DataTable
 				columns={columns}
 				data={data}
-				deleteData={(ids) => {
-					setData((oldData) =>
-						oldData.filter((item) => !ids.includes(item.id))
-					);
+				deleteData={(ids: Data[]) => {
+					setData((oldData) => oldData.filter((item) => !ids.includes(item)));
 				}}
 			/>
 		</main>

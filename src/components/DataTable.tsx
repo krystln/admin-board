@@ -22,17 +22,24 @@ import {
 } from "@tanstack/react-table";
 import { Input } from "./ui/input";
 
-interface DataTableProps<TData, TValue> {
-	columns: ColumnDef<TData, TValue>[];
-	data: TData[];
-	deleteData: (ids: number[]) => void;
+export type Data = {
+	id: number;
+	name: string;
+	email: string;
+	role: "member" | "admin";
+};
+
+interface DataTableProps<Data, TValue> {
+	columns: ColumnDef<Data, TValue>[];
+	data: Data[];
+	deleteData: (ids: Data[]) => void;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<Data, TValue>({
 	columns,
 	data,
 	deleteData
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<Data, TValue>) {
 	const [filters, setFilters] = React.useState("");
 
 	const table = useReactTable({
@@ -63,9 +70,9 @@ export function DataTable<TData, TValue>({
 					variant={"destructive"}
 					className="delete-selected delete"
 					onClick={() => {
-						const ids: number[] = [];
+						const ids: Data[] = [];
 						table.getSelectedRowModel().rows.forEach((row) => {
-							ids.push(row.original.id);
+							ids.push(row.original);
 						});
 						deleteData(ids);
 					}}>
